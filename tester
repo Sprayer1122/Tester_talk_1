@@ -1,1 +1,59 @@
-noivl1-amittal: /home/amittal/new_projects/tester_talk_1/Tester_talk_1 >python3 setup_database.py /home/amittal/.local/lib/python3.6/site-packages/pymysql/_auth.py:8: CryptographyDeprecationWarning: Python 3.6 is no longer supported by the Python core team. Therefore, support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.6. from cryptography.hazmat.backends import default_backend 🔧 Testing Platform Database COMPLETE RESET ============================================================ ⚠️ THIS WILL DELETE ALL EXISTING DATA! ============================================================ ❓ Are you sure you want to proceed? (yes/no): yes 🚀 Starting complete database reset... 🚀 Setting up Database with COMPLETE RESET... ============================================================ ⚠️ WARNING: This will DELETE ALL EXISTING DATA! ============================================================ ✅ Connected to MySQL successfully! 📝 Creating/Resetting database 'Tester_Talk'... 🗑️ Dropped existing database (if it existed) ✅ Created fresh database 📝 Creating tables from schema... ⚠️ Skipped statement: INSERT INTO tags (name) VALUES ('ui'), ('backend')... (Error: (1146, "Table 'Tester_Talk.tags' doesn't exist")) ✅ Database schema setup completed! 📊 Created 0 tables: 📈 Data Summary: 🎉 Database reset and setup completed successfully! 💫 All old data has been removed and fresh tables created! 📝 Creating .env file... ⚠️ .env file already exists - backing up... 📁 Backed up existing .env to backend/.env.backup ✅ .env file created successfully! 📁 Resetting uploads folder... 🗑️ Removed existing backend/uploads folder ✅ Created fresh backend/uploads folder 🗑️ Removed existing uploads folder ✅ Created fresh uploads folder ============================================================ 📊 Setup Summary ============================================================ Database Reset: ✅ SUCCESS Environment File: ✅ SUCCESS Uploads Reset: ✅ SUCCESS 🎉 Complete reset completed successfully! 📋 Next steps: 1. Start the backend: cd backend && python app.py 2. Open your browser to: http://localhost:8080 3. Register a new admin user or use existing sample data 💡 Sample data has been loaded - check the database! noivl1-amittal: /home/amittal/new_projects/tester_talk_1/Tester_talk_1 > mysql> SELECT DATABASE(); +-------------+ | DATABASE() | +-------------+ | Tester_Talk | +-------------+ 1 row in set (0.00 sec) mysql> show tables; Empty set (0.00 sec) mysql> show tables; Empty set (0.00 sec) mysql> show tables; Empty set (0.00 sec) mysql>
+/home/amittal/.local/lib/python3.6/site-packages/pymysql/_auth.py:8: CryptographyDeprecationWarning: Python 3.6 is no longer supported by the Python core team. Therefore, support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.6.
+  from cryptography.hazmat.backends import default_backend
+🔧 Testing Platform Database COMPLETE RESET
+============================================================
+⚠️  THIS WILL DELETE ALL EXISTING DATA!
+============================================================
+
+❓ Are you sure you want to proceed? (yes/no): yes
+
+🚀 Starting complete database reset...
+🚀 Setting up Database with COMPLETE RESET...
+============================================================
+⚠️  WARNING: This will DELETE ALL EXISTING DATA!
+============================================================
+✅ Connected to MySQL successfully!
+📝 Creating/Resetting database 'Tester_Talk'...
+   🗑️  Dropped existing database (if it existed)
+   ✅ Created fresh database
+
+📝 Creating tables from schema...
+   ⚠️  Skipped statement: INSERT INTO tags (name) VALUES
+('UI'), ('Backend')... (Error: (1146, "Table 'Tester_Talk.tags' doesn't exist"))
+
+✅ Database schema setup completed!
+
+📊 Created 0 tables:
+
+📈 Data Summary:
+
+🎉 Database reset and setup completed successfully!
+💫 All old data has been removed and fresh tables created!
+
+📝 Creating .env file...
+   ⚠️  .env file already exists - backing up...
+   📁 Backed up existing .env to backend/.env.backup
+   ✅ .env file created successfully!
+
+📁 Resetting uploads folder...
+   🗑️  Removed existing backend/uploads folder
+   ✅ Created fresh backend/uploads folder
+   🗑️  Removed existing uploads folder
+   ✅ Created fresh uploads folder
+
+============================================================
+📊 Setup Summary
+============================================================
+Database Reset: ✅ SUCCESS
+Environment File: ✅ SUCCESS
+Uploads Reset: ✅ SUCCESS
+
+🎉 Complete reset completed successfully!
+
+📋 Next steps:
+1. Start the backend: cd backend && python app.py
+2. Open your browser to: http://localhost:8080
+3. Register a new admin user or use existing sample data
+
+💡 Sample data has been loaded - check the database!
+noivl1-amittal: /home/amittal/new_projects/tester_talk_1/Tester_talk_1 >
