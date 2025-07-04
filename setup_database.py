@@ -20,8 +20,8 @@ def create_database():
         connection = pymysql.connect(
             host='172.23.104.39',
             port=3306,
-            user='etadmin',
-            password='etadmin',  # Replace with actual password
+            user='etladmin',
+            password='YOUR_ACTUAL_PASSWORD',  # Replace with actual password
             charset='utf8mb4'
         )
         
@@ -48,27 +48,22 @@ def create_database():
                 
                 print(f"   📄 Schema file size: {len(schema_content)} characters")
                 
-                # Better SQL statement parsing - handle multi-line statements
-                statements = []
-                current_statement = ""
-                
+                # Better SQL statement parsing - handle multi-line statements properly
+                # Remove comments and empty lines first
+                clean_lines = []
                 for line in schema_content.split('\n'):
                     line = line.strip()
-                    
                     # Skip empty lines and comments
                     if not line or line.startswith('--'):
                         continue
-                        
                     # Skip database creation statements
                     if line.startswith('CREATE DATABASE') or line.startswith('USE '):
                         continue
-                    
-                    current_statement += " " + line
-                    
-                    # If line ends with semicolon, we have a complete statement
-                    if line.endswith(';'):
-                        statements.append(current_statement.strip().rstrip(';'))
-                        current_statement = ""
+                    clean_lines.append(line)
+                
+                # Join all lines and split by semicolon for complete statements
+                clean_content = ' '.join(clean_lines)
+                statements = [stmt.strip() for stmt in clean_content.split(';') if stmt.strip()]
                 
                 print(f"   📝 Found {len(statements)} SQL statements to execute")
                 
