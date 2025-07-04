@@ -1,24 +1,76 @@
-noivl1-amittal: /home/amittal/new_projects/tester_talk_1/Tester_talk_1/backend >python3 app.py
-/home/amittal/.local/lib/python3.6/site-packages/pymysql/_auth.py:8: CryptographyDeprecationWarning: Python 3.6 is no longer supported by the Python core team. Therefore, support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.6.
-  from cryptography.hazmat.backends import default_backend
- * Serving Flask app 'app' (lazy loading)
- * Environment: development
- * Debug mode: on
- * Running on all addresses.
-   WARNING: This is a development server. Do not use it in a production deployment.
- * Running on http://172.23.61.83:8080/ (Press CTRL+C to quit)
-10.254.57.133 - - [05/Jul/2025 02:25:02] "GET / HTTP/1.1" 304 -
-10.254.57.133 - - [05/Jul/2025 02:25:02] "GET /static/style.css HTTP/1.1" 304 -
-10.254.57.133 - - [05/Jul/2025 02:25:02] "GET /static/main.js HTTP/1.1" 304 -
-10.254.57.133 - - [05/Jul/2025 02:25:02] "GET /static/loading.js HTTP/1.1" 304 -
-10.254.57.133 - - [05/Jul/2025 02:25:02] "GET /static/notifications.js HTTP/1.1" 304 -
-10.254.57.133 - - [05/Jul/2025 02:25:02] "GET /favicon.ico HTTP/1.1" 304 -
-10.254.57.133 - - [05/Jul/2025 02:25:02] "GET /api/auth/me HTTP/1.1" 200 -
-10.254.57.133 - - [05/Jul/2025 02:25:02] "GET /api/builds HTTP/1.1" 200 -
-Unhandled exception: (pymysql.err.OperationalError) (1054, "Unknown column 'issues.reviewer_name' in 'field list'")
-[SQL: SELECT issues.id AS issues_id, issues.testcase_title AS issues_testcase_title, issues.testcase_path AS issues_testcase_path, issues.severity AS issues_severity, issues.test_case_ids AS issues_test_case_ids, issues.`release` AS issues_release, issues.platform AS issues_platform, issues.build AS issues_build, issues.target AS issues_target, issues.description AS issues_description, issues.additional_comments AS issues_additional_comments, issues.reporter_name AS issues_reporter_name, issues.reviewer_name AS issues_reviewer_name, issues.status AS issues_status, issues.ccr_number AS issues_ccr_number, issues.created_at AS issues_created_at, issues.updated_at AS issues_updated_at, issues.upvotes AS issues_upvotes, issues.downvotes AS issues_downvotes 
-FROM issues ORDER BY issues.created_at DESC 
- LIMIT %(param_1)s]
-[parameters: {'param_1': 20}]
-(Background on this error at: https://sqlalche.me/e/14/e3q8)
-10.254.57.133 - - [05/Jul/2025 02:25:02] "POST /api/search HTTP/1.1" 500 -
+#!/usr/bin/env python3
+"""
+Quick fix to add missing reviewer_name column to issues table
+"""
+
+import pymysql
+import sys
+
+def add_reviewer_column():
+    """Add missing reviewer_name column to issues table"""
+    print("🔧 Adding missing reviewer_name column to issues table...")
+    
+    try:
+        # Connect to MySQL database
+        connection = pymysql.connect(
+            host='172.23.104.39',
+            port=3306,
+            user='etladmin',
+            password='YOUR_ACTUAL_PASSWORD',  # Replace with your actual etladmin password
+            database='Tester_Talk',
+            charset='utf8mb4'
+        )
+        
+        with connection.cursor() as cursor:
+            # Check if column exists
+            cursor.execute("""
+                SELECT COLUMN_NAME 
+                FROM INFORMATION_SCHEMA.COLUMNS 
+                WHERE TABLE_SCHEMA = 'Tester_Talk' 
+                AND TABLE_NAME = 'issues' 
+                AND COLUMN_NAME = 'reviewer_name'
+            """)
+            
+            existing_column = cursor.fetchone()
+            
+            if existing_column:
+                print("✅ reviewer_name column already exists!")
+            else:
+                print("❌ reviewer_name column missing - adding it now...")
+                
+                # Add the missing column
+                cursor.execute("""
+                    ALTER TABLE issues 
+                    ADD COLUMN reviewer_name VARCHAR(100) DEFAULT 'Admin' 
+                    AFTER reporter_name
+                """)
+                
+                connection.commit()
+                print("✅ reviewer_name column added successfully!")
+            
+            # Verify the column exists now
+            cursor.execute("""
+                SELECT COLUMN_NAME, DATA_TYPE, COLUMN_DEFAULT 
+                FROM INFORMATION_SCHEMA.COLUMNS 
+                WHERE TABLE_SCHEMA = 'Tester_Talk' 
+                AND TABLE_NAME = 'issues' 
+                AND COLUMN_NAME = 'reviewer_name'
+            """)
+            
+            result = cursor.fetchone()
+            if result:
+                print(f"✅ Column verified: {result[0]} ({result[1]}, default: {result[2]})")
+            else:
+                print("❌ Column still missing after adding!")
+            
+    except Exception as e:
+        print(f"❌ Error: {e}")
+        sys.exit(1)
+    
+    finally:
+        if 'connection' in locals():
+            connection.close()
+
+if __name__ == "__main__":
+    add_reviewer_column()
+    print("\n🎉 Fix completed! You can now start the Flask app.") 
