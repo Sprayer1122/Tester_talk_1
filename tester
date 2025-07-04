@@ -1,1 +1,5 @@
-mysql -u etladmin -p -h 172.23.104.39 -e "USE Tester_Talk; DESCRIBE issues;"
+mysql> mysql -u etladmin -p -h 172.23.104.39 -e "USE Tester_Talk; DESCRIBE issues;"
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysql -u etladmin -p -h 172.23.104.39 -e "USE Tester_Talk; DESCRIBE issues;"' at line 1
+mysql> 
+
