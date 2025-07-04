@@ -18,14 +18,54 @@
    ✅ Created fresh database
 
 📝 Creating tables from schema...
-   ⚠️  Skipped statement: INSERT INTO tags (name) VALUES
-('UI'), ('Backend')... (Error: (1146, "Table 'Tester_Talk.tags' doesn't exist"))
+   📄 Schema file size: 5778 characters
+   📝 Found 11 SQL statements to execute
+   🔄 Executing statement 1/11
+   ✅ Created table: 
+   🔄 Executing statement 2/11
+   ❌ Failed to execute statement 2: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'release VARCHAR(10), platform VARCHAR(20), build VARCHAR(20), target VARCHAR(100' at line 1")
+   📜 Statement: CREATE TABLE IF NOT EXISTS issues ( id INT AUTO_INCREMENT PRIMARY KEY, testcase_title VARCHAR(500) N...
+   🚨 CREATE TABLE failed - this is critical!
+   🔄 Executing statement 3/11
+   ✅ Created table: 
+   🔄 Executing statement 4/11
+   ❌ Failed to execute statement 4: (1824, "Failed to open the referenced table 'issues'")
+   📜 Statement: CREATE TABLE IF NOT EXISTS issue_tags ( issue_id INT, tag_id INT, PRIMARY KEY (issue_id, tag_id), FO...
+   🚨 CREATE TABLE failed - this is critical!
+   🔄 Executing statement 5/11
+   ❌ Failed to execute statement 5: (1824, "Failed to open the referenced table 'issues'")
+   📜 Statement: CREATE TABLE IF NOT EXISTS comments ( id INT AUTO_INCREMENT PRIMARY KEY, issue_id INT NOT NULL, comm...
+   🚨 CREATE TABLE failed - this is critical!
+   🔄 Executing statement 6/11
+   ❌ Failed to execute statement 6: (1824, "Failed to open the referenced table 'issues'")
+   📜 Statement: CREATE TABLE IF NOT EXISTS attachments ( id INT AUTO_INCREMENT PRIMARY KEY, issue_id INT NOT NULL, c...
+   🚨 CREATE TABLE failed - this is critical!
+   🔄 Executing statement 7/11
+   ❌ Failed to execute statement 7: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'release VARCHAR(10), platform VARCHAR(20), added_by VARCHAR(100) NOT NULL, creat' at line 1")
+   📜 Statement: CREATE TABLE IF NOT EXISTS testcase_paths ( id INT AUTO_INCREMENT PRIMARY KEY, issue_id INT NOT NULL...
+   🚨 CREATE TABLE failed - this is critical!
+   🔄 Executing statement 8/11
+   ✅ Created table: 
+   🔄 Executing statement 9/11
+   ❌ Failed to execute statement 9: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'release, platform, build, target, description, reporter_name, status) VALUES ('L' at line 1")
+   📜 Statement: INSERT INTO issues (testcase_title, testcase_path, severity, test_case_ids, release, platform, build...
+   🔄 Executing statement 10/11
+   ✅ Inserted sample data into: tags
+   🔄 Executing statement 11/11
+   ❌ Failed to execute statement 11: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1")
+   📜 Statement: INSERT INTO issue_tags (issue_id, tag_id) VALUES (1, 1), (1, 6),  -- Login button: UI, Login (2, 2),...
 
 ✅ Database schema setup completed!
 
-📊 Created 0 tables:
+📊 Created 3 tables:
+   - bucket_reviewers
+   - tags
+   - users
 
 📈 Data Summary:
+   - bucket_reviewers: 0 records
+   - tags: 8 records
+   - users: 0 records
 
 🎉 Database reset and setup completed successfully!
 💫 All old data has been removed and fresh tables created!
