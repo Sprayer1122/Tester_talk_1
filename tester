@@ -1,2 +1,6 @@
-USE Tester_Talk;
-ALTER TABLE issues ADD COLUMN reviewer_name VARCHAR(100) DEFAULT 'Admin' AFTER reporter_name;
+mysql> USE Tester_Talk;
+Database changed
+mysql> ALTER TABLE issues ADD COLUMN reviewer_name VARCHAR(100) DEFAULT 'Admin' AFTER reporter_name;
+ERROR 1060 (42S21): Duplicate column name 'reviewer_name'
+mysql> 
+
