@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS issues (
     testcase_path VARCHAR(200) NOT NULL,
     severity ENUM('Low', 'Medium', 'High', 'Critical') NOT NULL,
     test_case_ids VARCHAR(200) NOT NULL,
-    release VARCHAR(10),
+    `release` VARCHAR(10),
     platform VARCHAR(20),
     build VARCHAR(20),
     target VARCHAR(100),
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS testcase_paths (
     id INT AUTO_INCREMENT PRIMARY KEY,
     issue_id INT NOT NULL,
     testcase_path VARCHAR(200) NOT NULL,
-    release VARCHAR(10),
+    `release` VARCHAR(10),
     platform VARCHAR(20),
     added_by VARCHAR(100) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS bucket_reviewers (
 );
 
 -- Sample data for testing
-INSERT INTO issues (testcase_title, testcase_path, severity, test_case_ids, release, platform, build, target, description, reporter_name, status) VALUES
+INSERT INTO issues (testcase_title, testcase_path, severity, test_case_ids, `release`, platform, build, target, description, reporter_name, status) VALUES
 ('Login Button Not Responding', '/lan/fed/etpv5/release/251/lnx86/etautotest/ui/login/test_login_button', 'Critical', 'TC-20250101-TEST', '251', 'lnx86', 'Weekly', '25.11-d065_1_Jun23', 'The login button on the main page is not responding to clicks. Test case fails consistently.', 'John Tester', 'open'),
 ('Database Connection Timeout', '/lan/fed/etpv5/release/251/lnx86/etautotest/backend/db/test_connection', 'High', 'TC-20250102-TEST', '251', 'lnx86', 'Daily', '25.11-d065_1_Jun23', 'Getting connection timeout errors when running bulk data tests.', 'Sarah QA', 'resolved'),
 ('Mobile Layout Broken', '/lan/fed/etpv5/release/251/lnx86/etautotest/ui/mobile/test_responsive', 'Medium', 'TC-20250103-TEST', '251', 'lnx86', 'Weekly', '25.11-d065_1_Jun23', 'The dashboard layout breaks on mobile devices with screen width less than 768px.', 'Mike Dev', 'open');
