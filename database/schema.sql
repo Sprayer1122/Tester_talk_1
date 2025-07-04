@@ -1,35 +1,55 @@
--- Database schema for Internal Stack Overflow Platform
+-- Database schema for Testing Platform (Tester Talk)
 -- MySQL 8.0+ compatible
 
-CREATE DATABASE IF NOT EXISTS testing_platform;
-USE testing_platform;
+-- Note: Database creation is handled by setup script
 
--- Issues table
-CREATE TABLE issues (
+-- Users table (for authentication)
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(255) NOT NULL,
+    username VARCHAR(80) UNIQUE NOT NULL,
+    email VARCHAR(120) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'user') DEFAULT 'user',
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_login TIMESTAMP NULL
+);
+
+-- Issues table (main table)
+CREATE TABLE IF NOT EXISTS issues (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    testcase_title VARCHAR(500) NOT NULL,
+    testcase_path VARCHAR(200) NOT NULL,
+    severity ENUM('Low', 'Medium', 'High', 'Critical') NOT NULL,
+    test_case_ids VARCHAR(200) NOT NULL,
+    release VARCHAR(10),
+    platform VARCHAR(20),
+    build VARCHAR(20),
+    target VARCHAR(100),
     description TEXT NOT NULL,
-    test_case_id VARCHAR(100),
-    commenter_name VARCHAR(100) NOT NULL,
-    status ENUM('open', 'resolved') DEFAULT 'open',
+    additional_comments TEXT,
+    reporter_name VARCHAR(100) NOT NULL,
+    reviewer_name VARCHAR(100) DEFAULT 'Admin',
+    status ENUM('open', 'in_progress', 'resolved', 'closed', 'ccr') DEFAULT 'open',
+    ccr_number VARCHAR(100),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     upvotes INT DEFAULT 0,
     downvotes INT DEFAULT 0,
     INDEX idx_status (status),
-    INDEX idx_test_case_id (test_case_id),
+    INDEX idx_test_case_id (test_case_ids),
     INDEX idx_created_at (created_at)
 );
 
 -- Tags table
-CREATE TABLE tags (
+CREATE TABLE IF NOT EXISTS tags (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Issue-Tags relationship table
-CREATE TABLE issue_tags (
+CREATE TABLE IF NOT EXISTS issue_tags (
     issue_id INT,
     tag_id INT,
     PRIMARY KEY (issue_id, tag_id),
@@ -38,7 +58,7 @@ CREATE TABLE issue_tags (
 );
 
 -- Comments table
-CREATE TABLE comments (
+CREATE TABLE IF NOT EXISTS comments (
     id INT AUTO_INCREMENT PRIMARY KEY,
     issue_id INT NOT NULL,
     commenter_name VARCHAR(100) NOT NULL,
@@ -54,9 +74,9 @@ CREATE TABLE comments (
 );
 
 -- File attachments table
-CREATE TABLE attachments (
+CREATE TABLE IF NOT EXISTS attachments (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    issue_id INT,
+    issue_id INT NOT NULL,
     comment_id INT NULL,
     filename VARCHAR(255) NOT NULL,
     file_path VARCHAR(500) NOT NULL,
@@ -70,20 +90,41 @@ CREATE TABLE attachments (
     INDEX idx_comment_id (comment_id)
 );
 
+-- Additional testcase paths table
+CREATE TABLE IF NOT EXISTS testcase_paths (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    issue_id INT NOT NULL,
+    testcase_path VARCHAR(200) NOT NULL,
+    release VARCHAR(10),
+    platform VARCHAR(20),
+    added_by VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (issue_id) REFERENCES issues(id) ON DELETE CASCADE
+);
+
+-- Bucket reviewers mapping table
+CREATE TABLE IF NOT EXISTS bucket_reviewers (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    bucket_name VARCHAR(100) UNIQUE NOT NULL,
+    reviewer_name VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
 -- Sample data for testing
-INSERT INTO issues (title, description, test_case_id, commenter_name, status) VALUES
-('Login button not responding', 'The login button on the main page is not responding to clicks. Test case TC-001 fails consistently.', 'TC-001', 'John Tester', 'open'),
-('Database connection timeout', 'Getting connection timeout errors when running bulk data tests. Affects TC-015 and TC-016.', 'TC-015', 'Sarah QA', 'resolved'),
-('Mobile responsive layout broken', 'The dashboard layout breaks on mobile devices with screen width less than 768px.', 'TC-023', 'Mike Dev', 'open');
+INSERT INTO issues (testcase_title, testcase_path, severity, test_case_ids, release, platform, build, target, description, reporter_name, status) VALUES
+('Login Button Not Responding', '/lan/fed/etpv5/release/251/lnx86/etautotest/ui/login/test_login_button', 'Critical', 'TC-20250101-TEST', '251', 'lnx86', 'Weekly', '25.11-d065_1_Jun23', 'The login button on the main page is not responding to clicks. Test case fails consistently.', 'John Tester', 'open'),
+('Database Connection Timeout', '/lan/fed/etpv5/release/251/lnx86/etautotest/backend/db/test_connection', 'High', 'TC-20250102-TEST', '251', 'lnx86', 'Daily', '25.11-d065_1_Jun23', 'Getting connection timeout errors when running bulk data tests.', 'Sarah QA', 'resolved'),
+('Mobile Layout Broken', '/lan/fed/etpv5/release/251/lnx86/etautotest/ui/mobile/test_responsive', 'Medium', 'TC-20250103-TEST', '251', 'lnx86', 'Weekly', '25.11-d065_1_Jun23', 'The dashboard layout breaks on mobile devices with screen width less than 768px.', 'Mike Dev', 'open');
 
 INSERT INTO tags (name) VALUES
-('ui'), ('backend'), ('mobile'), ('database'), ('performance'), ('login');
+('UI'), ('Backend'), ('Mobile'), ('Database'), ('Performance'), ('Login'), ('ETT'), ('Critical');
 
 -- Link tags to issues
 INSERT INTO issue_tags (issue_id, tag_id) VALUES
-(1, 1), (1, 6),  -- Login button: ui, login
-(2, 2), (2, 4),  -- Database timeout: backend, database
-(3, 1), (3, 3);  -- Mobile layout: ui, mobile
+(1, 1), (1, 6),  -- Login button: UI, Login
+(2, 2), (2, 4),  -- Database timeout: Backend, Database
+(3, 1), (3, 3);  -- Mobile layout: UI, Mobile
 
 INSERT INTO comments (issue_id, commenter_name, content, is_verified_solution) VALUES
 (1, 'Alice Dev', 'This was caused by a JavaScript event handler conflict. Fixed in commit #abc123.', FALSE),
