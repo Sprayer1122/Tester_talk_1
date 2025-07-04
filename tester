@@ -1,3 +1,4 @@
+noivl1-amittal: /home/amittal/new_projects/tester_talk_1/Tester_talk_1 >python3 setup_database.py
 /home/amittal/.local/lib/python3.6/site-packages/pymysql/_auth.py:8: CryptographyDeprecationWarning: Python 3.6 is no longer supported by the Python core team. Therefore, support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.6.
   from cryptography.hazmat.backends import default_backend
 🔧 Testing Platform Database COMPLETE RESET
@@ -19,41 +20,42 @@
 
 📝 Creating tables from schema...
    📄 Schema file size: 5778 characters
-   📝 Found 11 SQL statements to execute
-   🔄 Executing statement 1/11
+   📝 Found 12 SQL statements to execute
+   🔄 Executing statement 1/12
    ✅ Created table: 
-   🔄 Executing statement 2/11
+   🔄 Executing statement 2/12
    ❌ Failed to execute statement 2: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'release VARCHAR(10), platform VARCHAR(20), build VARCHAR(20), target VARCHAR(100' at line 1")
    📜 Statement: CREATE TABLE IF NOT EXISTS issues ( id INT AUTO_INCREMENT PRIMARY KEY, testcase_title VARCHAR(500) N...
    🚨 CREATE TABLE failed - this is critical!
-   🔄 Executing statement 3/11
+   🔄 Executing statement 3/12
    ✅ Created table: 
-   🔄 Executing statement 4/11
+   🔄 Executing statement 4/12
    ❌ Failed to execute statement 4: (1824, "Failed to open the referenced table 'issues'")
    📜 Statement: CREATE TABLE IF NOT EXISTS issue_tags ( issue_id INT, tag_id INT, PRIMARY KEY (issue_id, tag_id), FO...
    🚨 CREATE TABLE failed - this is critical!
-   🔄 Executing statement 5/11
+   🔄 Executing statement 5/12
    ❌ Failed to execute statement 5: (1824, "Failed to open the referenced table 'issues'")
    📜 Statement: CREATE TABLE IF NOT EXISTS comments ( id INT AUTO_INCREMENT PRIMARY KEY, issue_id INT NOT NULL, comm...
    🚨 CREATE TABLE failed - this is critical!
-   🔄 Executing statement 6/11
+   🔄 Executing statement 6/12
    ❌ Failed to execute statement 6: (1824, "Failed to open the referenced table 'issues'")
    📜 Statement: CREATE TABLE IF NOT EXISTS attachments ( id INT AUTO_INCREMENT PRIMARY KEY, issue_id INT NOT NULL, c...
    🚨 CREATE TABLE failed - this is critical!
-   🔄 Executing statement 7/11
+   🔄 Executing statement 7/12
    ❌ Failed to execute statement 7: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'release VARCHAR(10), platform VARCHAR(20), added_by VARCHAR(100) NOT NULL, creat' at line 1")
    📜 Statement: CREATE TABLE IF NOT EXISTS testcase_paths ( id INT AUTO_INCREMENT PRIMARY KEY, issue_id INT NOT NULL...
    🚨 CREATE TABLE failed - this is critical!
-   🔄 Executing statement 8/11
+   🔄 Executing statement 8/12
    ✅ Created table: 
-   🔄 Executing statement 9/11
+   🔄 Executing statement 9/12
    ❌ Failed to execute statement 9: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'release, platform, build, target, description, reporter_name, status) VALUES ('L' at line 1")
    📜 Statement: INSERT INTO issues (testcase_title, testcase_path, severity, test_case_ids, release, platform, build...
-   🔄 Executing statement 10/11
+   🔄 Executing statement 10/12
    ✅ Inserted sample data into: tags
-   🔄 Executing statement 11/11
+   🔄 Executing statement 11/12
    ❌ Failed to execute statement 11: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1")
    📜 Statement: INSERT INTO issue_tags (issue_id, tag_id) VALUES (1, 1), (1, 6),  -- Login button: UI, Login (2, 2),...
+   🔄 Executing statement 12/12
 
 ✅ Database schema setup completed!
 
