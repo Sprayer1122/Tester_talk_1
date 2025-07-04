@@ -1,5 +1,27 @@
-mysql> mysql -u etladmin -p -h 172.23.104.39 -e "USE Tester_Talk; DESCRIBE issues;"
-    -> ;
-ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysql -u etladmin -p -h 172.23.104.39 -e "USE Tester_Talk; DESCRIBE issues;"' at line 1
-mysql> 
+mysql> DESCRIBE issues;
++---------------------+------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| Field               | Type                                                 | Null | Key | Default           | Extra                                         |
++---------------------+------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+| id                  | int                                                  | NO   | PRI | NULL              | auto_increment                                |
+| testcase_title      | varchar(500)                                         | NO   |     | NULL              |                                               |
+| testcase_path       | varchar(200)                                         | NO   |     | NULL              |                                               |
+| severity            | enum('Low','Medium','High','Critical')               | NO   |     | NULL              |                                               |
+| test_case_ids       | varchar(200)                                         | NO   | MUL | NULL              |                                               |
+| release             | varchar(10)                                          | YES  |     | NULL              |                                               |
+| platform            | varchar(20)                                          | YES  |     | NULL              |                                               |
+| build               | varchar(20)                                          | YES  |     | NULL              |                                               |
+| target              | varchar(100)                                         | YES  |     | NULL              |                                               |
+| description         | text                                                 | NO   |     | NULL              |                                               |
+| additional_comments | text                                                 | YES  |     | NULL              |                                               |
+| reporter_name       | varchar(100)                                         | NO   |     | NULL              |                                               |
+| reviewer_name       | varchar(100)                                         | YES  |     | Admin             |                                               |
+| status              | enum('open','in_progress','resolved','closed','ccr') | YES  | MUL | open              |                                               |
+| ccr_number          | varchar(100)                                         | YES  |     | NULL              |                                               |
+| created_at          | timestamp                                            | YES  | MUL | CURRENT_TIMESTAMP | DEFAULT_GENERATED                             |
+| updated_at          | timestamp                                            | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED on update CURRENT_TIMESTAMP |
+| upvotes             | int                                                  | YES  |     | 0                 |                                               |
+| downvotes           | int                                                  | YES  |     | 0                 |                                               |
++---------------------+------------------------------------------------------+------+-----+-------------------+-----------------------------------------------+
+19 rows in set (0.01 sec)
 
+mysql> 
