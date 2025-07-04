@@ -1,0 +1,9 @@
+# Backend Configuration
+SECRET_KEY=your-super-secret-key-change-in-production
+
+# MySQL Database Configuration for Remote Server
+DATABASE_URL=mysql+pymysql://etladmin:YOUR_ACTUAL_PASSWORD@172.23.104.39:3306/Tester_Talk
+
+# Flask Configuration
+FLASK_ENV=production
+DEBUG=False
