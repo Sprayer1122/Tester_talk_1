@@ -19,37 +19,26 @@ noivl1-amittal: /home/amittal/new_projects/tester_talk_1/Tester_talk_1 >python3 
    ✅ Created fresh database
 
 📝 Creating tables from schema...
-   📄 Schema file size: 5778 characters
+   📄 Schema file size: 5784 characters
    📝 Found 12 SQL statements to execute
    🔄 Executing statement 1/12
    ✅ Created table: 
    🔄 Executing statement 2/12
-   ❌ Failed to execute statement 2: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'release VARCHAR(10), platform VARCHAR(20), build VARCHAR(20), target VARCHAR(100' at line 1")
-   📜 Statement: CREATE TABLE IF NOT EXISTS issues ( id INT AUTO_INCREMENT PRIMARY KEY, testcase_title VARCHAR(500) N...
-   🚨 CREATE TABLE failed - this is critical!
+   ✅ Created table: 
    🔄 Executing statement 3/12
    ✅ Created table: 
    🔄 Executing statement 4/12
-   ❌ Failed to execute statement 4: (1824, "Failed to open the referenced table 'issues'")
-   📜 Statement: CREATE TABLE IF NOT EXISTS issue_tags ( issue_id INT, tag_id INT, PRIMARY KEY (issue_id, tag_id), FO...
-   🚨 CREATE TABLE failed - this is critical!
+   ✅ Created table: 
    🔄 Executing statement 5/12
-   ❌ Failed to execute statement 5: (1824, "Failed to open the referenced table 'issues'")
-   📜 Statement: CREATE TABLE IF NOT EXISTS comments ( id INT AUTO_INCREMENT PRIMARY KEY, issue_id INT NOT NULL, comm...
-   🚨 CREATE TABLE failed - this is critical!
+   ✅ Created table: 
    🔄 Executing statement 6/12
-   ❌ Failed to execute statement 6: (1824, "Failed to open the referenced table 'issues'")
-   📜 Statement: CREATE TABLE IF NOT EXISTS attachments ( id INT AUTO_INCREMENT PRIMARY KEY, issue_id INT NOT NULL, c...
-   🚨 CREATE TABLE failed - this is critical!
+   ✅ Created table: 
    🔄 Executing statement 7/12
-   ❌ Failed to execute statement 7: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'release VARCHAR(10), platform VARCHAR(20), added_by VARCHAR(100) NOT NULL, creat' at line 1")
-   📜 Statement: CREATE TABLE IF NOT EXISTS testcase_paths ( id INT AUTO_INCREMENT PRIMARY KEY, issue_id INT NOT NULL...
-   🚨 CREATE TABLE failed - this is critical!
+   ✅ Created table: 
    🔄 Executing statement 8/12
    ✅ Created table: 
    🔄 Executing statement 9/12
-   ❌ Failed to execute statement 9: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'release, platform, build, target, description, reporter_name, status) VALUES ('L' at line 1")
-   📜 Statement: INSERT INTO issues (testcase_title, testcase_path, severity, test_case_ids, release, platform, build...
+   ✅ Inserted sample data into: issues
    🔄 Executing statement 10/12
    ✅ Inserted sample data into: tags
    🔄 Executing statement 11/12
@@ -59,14 +48,24 @@ noivl1-amittal: /home/amittal/new_projects/tester_talk_1/Tester_talk_1 >python3 
 
 ✅ Database schema setup completed!
 
-📊 Created 3 tables:
+📊 Created 8 tables:
+   - attachments
    - bucket_reviewers
+   - comments
+   - issue_tags
+   - issues
    - tags
+   - testcase_paths
    - users
 
 📈 Data Summary:
+   - attachments: 0 records
    - bucket_reviewers: 0 records
+   - comments: 0 records
+   - issue_tags: 0 records
+   - issues: 3 records
    - tags: 8 records
+   - testcase_paths: 0 records
    - users: 0 records
 
 🎉 Database reset and setup completed successfully!
