@@ -1,100 +1,48 @@
-noivl1-amittal: /home/amittal/new_projects/tester_talk_1/Tester_talk_1 >python3 setup_database.py
+noivl1-amittal: /home/amittal/new_projects/tester_talk_1/Tester_talk_1 >python3 backend/app.py
 /home/amittal/.local/lib/python3.6/site-packages/pymysql/_auth.py:8: CryptographyDeprecationWarning: Python 3.6 is no longer supported by the Python core team. Therefore, support for it is deprecated in cryptography. The next release of cryptography will remove support for Python 3.6.
   from cryptography.hazmat.backends import default_backend
-🔧 Testing Platform Database COMPLETE RESET
-============================================================
-⚠️  THIS WILL DELETE ALL EXISTING DATA!
-============================================================
-
-❓ Are you sure you want to proceed? (yes/no): yes
-
-🚀 Starting complete database reset...
-🚀 Setting up Database with COMPLETE RESET...
-============================================================
-⚠️  WARNING: This will DELETE ALL EXISTING DATA!
-============================================================
-✅ Connected to MySQL successfully!
-📝 Creating/Resetting database 'Tester_Talk'...
-   🗑️  Dropped existing database (if it existed)
-   ✅ Created fresh database
-
-📝 Creating tables from schema...
-   📄 Schema file size: 5784 characters
-   📝 Found 12 SQL statements to execute
-   🔄 Executing statement 1/12
-   ✅ Created table: 
-   🔄 Executing statement 2/12
-   ✅ Created table: 
-   🔄 Executing statement 3/12
-   ✅ Created table: 
-   🔄 Executing statement 4/12
-   ✅ Created table: 
-   🔄 Executing statement 5/12
-   ✅ Created table: 
-   🔄 Executing statement 6/12
-   ✅ Created table: 
-   🔄 Executing statement 7/12
-   ✅ Created table: 
-   🔄 Executing statement 8/12
-   ✅ Created table: 
-   🔄 Executing statement 9/12
-   ✅ Inserted sample data into: issues
-   🔄 Executing statement 10/12
-   ✅ Inserted sample data into: tags
-   🔄 Executing statement 11/12
-   ❌ Failed to execute statement 11: (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1")
-   📜 Statement: INSERT INTO issue_tags (issue_id, tag_id) VALUES (1, 1), (1, 6),  -- Login button: UI, Login (2, 2),...
-   🔄 Executing statement 12/12
-
-✅ Database schema setup completed!
-
-📊 Created 8 tables:
-   - attachments
-   - bucket_reviewers
-   - comments
-   - issue_tags
-   - issues
-   - tags
-   - testcase_paths
-   - users
-
-📈 Data Summary:
-   - attachments: 0 records
-   - bucket_reviewers: 0 records
-   - comments: 0 records
-   - issue_tags: 0 records
-   - issues: 3 records
-   - tags: 8 records
-   - testcase_paths: 0 records
-   - users: 0 records
-
-🎉 Database reset and setup completed successfully!
-💫 All old data has been removed and fresh tables created!
-
-📝 Creating .env file...
-   ⚠️  .env file already exists - backing up...
-   📁 Backed up existing .env to backend/.env.backup
-   ✅ .env file created successfully!
-
-📁 Resetting uploads folder...
-   🗑️  Removed existing backend/uploads folder
-   ✅ Created fresh backend/uploads folder
-   🗑️  Removed existing uploads folder
-   ✅ Created fresh uploads folder
-
-============================================================
-📊 Setup Summary
-============================================================
-Database Reset: ✅ SUCCESS
-Environment File: ✅ SUCCESS
-Uploads Reset: ✅ SUCCESS
-
-🎉 Complete reset completed successfully!
-
-📋 Next steps:
-1. Start the backend: cd backend && python app.py
-2. Open your browser to: http://localhost:8080
-3. Register a new admin user or use existing sample data
-
-💡 Sample data has been loaded - check the database!
-noivl1-amittal: /home/amittal/new_projects/tester_talk_1/Tester_talk_1 >
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: development
+ * Debug mode: on
+ * Running on all addresses.
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://172.23.61.83:8080/ (Press CTRL+C to quit)
+10.254.57.133 - - [05/Jul/2025 02:21:13] "GET / HTTP/1.1" 304 -
+10.254.57.133 - - [05/Jul/2025 02:21:13] "GET /static/style.css HTTP/1.1" 304 -
+10.254.57.133 - - [05/Jul/2025 02:21:13] "GET /static/loading.js HTTP/1.1" 304 -
+10.254.57.133 - - [05/Jul/2025 02:21:13] "GET /static/main.js HTTP/1.1" 304 -
+10.254.57.133 - - [05/Jul/2025 02:21:13] "GET /static/notifications.js HTTP/1.1" 304 -
+10.254.57.133 - - [05/Jul/2025 02:21:13] "GET /api/auth/me HTTP/1.1" 401 -
+10.254.57.133 - - [05/Jul/2025 02:21:13] "GET /favicon.ico HTTP/1.1" 304 -
+10.254.57.133 - - [05/Jul/2025 02:21:13] "GET /api/builds HTTP/1.1" 200 -
+Unhandled exception: (pymysql.err.OperationalError) (1054, "Unknown column 'issues.reviewer_name' in 'field list'")
+[SQL: SELECT issues.id AS issues_id, issues.testcase_title AS issues_testcase_title, issues.testcase_path AS issues_testcase_path, issues.severity AS issues_severity, issues.test_case_ids AS issues_test_case_ids, issues.`release` AS issues_release, issues.platform AS issues_platform, issues.build AS issues_build, issues.target AS issues_target, issues.description AS issues_description, issues.additional_comments AS issues_additional_comments, issues.reporter_name AS issues_reporter_name, issues.reviewer_name AS issues_reviewer_name, issues.status AS issues_status, issues.ccr_number AS issues_ccr_number, issues.created_at AS issues_created_at, issues.updated_at AS issues_updated_at, issues.upvotes AS issues_upvotes, issues.downvotes AS issues_downvotes 
+FROM issues ORDER BY issues.created_at DESC 
+ LIMIT %(param_1)s]
+[parameters: {'param_1': 20}]
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+10.254.57.133 - - [05/Jul/2025 02:21:13] "POST /api/search HTTP/1.1" 500 -
+10.254.57.133 - - [05/Jul/2025 02:21:17] "GET /login.html HTTP/1.1" 200 -
+10.254.57.133 - - [05/Jul/2025 02:21:17] "GET /static/style.css HTTP/1.1" 304 -
+10.254.57.133 - - [05/Jul/2025 02:21:17] "GET /static/login.js HTTP/1.1" 200 -
+10.254.57.133 - - [05/Jul/2025 02:21:17] "GET /api/auth/me HTTP/1.1" 401 -
+10.254.57.133 - - [05/Jul/2025 02:21:17] "GET /favicon.ico HTTP/1.1" 304 -
+Login attempt for username: amittal
+Login successful for user: amittal, session user_id: 1
+Session data: {'user_id': 1}
+10.254.57.133 - - [05/Jul/2025 02:21:30] "POST /api/auth/login HTTP/1.1" 200 -
+10.254.57.133 - - [05/Jul/2025 02:21:31] "GET / HTTP/1.1" 304 -
+10.254.57.133 - - [05/Jul/2025 02:21:31] "GET /static/style.css HTTP/1.1" 304 -
+10.254.57.133 - - [05/Jul/2025 02:21:31] "GET /static/main.js HTTP/1.1" 304 -
+10.254.57.133 - - [05/Jul/2025 02:21:31] "GET /static/loading.js HTTP/1.1" 304 -
+10.254.57.133 - - [05/Jul/2025 02:21:31] "GET /static/notifications.js HTTP/1.1" 304 -
+10.254.57.133 - - [05/Jul/2025 02:21:31] "GET /api/auth/me HTTP/1.1" 200 -
+10.254.57.133 - - [05/Jul/2025 02:21:31] "GET /favicon.ico HTTP/1.1" 304 -
+10.254.57.133 - - [05/Jul/2025 02:21:32] "GET /api/builds HTTP/1.1" 200 -
+Unhandled exception: (pymysql.err.OperationalError) (1054, "Unknown column 'issues.reviewer_name' in 'field list'")
+[SQL: SELECT issues.id AS issues_id, issues.testcase_title AS issues_testcase_title, issues.testcase_path AS issues_testcase_path, issues.severity AS issues_severity, issues.test_case_ids AS issues_test_case_ids, issues.`release` AS issues_release, issues.platform AS issues_platform, issues.build AS issues_build, issues.target AS issues_target, issues.description AS issues_description, issues.additional_comments AS issues_additional_comments, issues.reporter_name AS issues_reporter_name, issues.reviewer_name AS issues_reviewer_name, issues.status AS issues_status, issues.ccr_number AS issues_ccr_number, issues.created_at AS issues_created_at, issues.updated_at AS issues_updated_at, issues.upvotes AS issues_upvotes, issues.downvotes AS issues_downvotes 
+FROM issues ORDER BY issues.created_at DESC 
+ LIMIT %(param_1)s]
+[parameters: {'param_1': 20}]
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+10.254.57.133 - - [05/Jul/2025 02:21:32] "POST /api/search HTTP/1.1" 500 -
