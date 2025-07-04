@@ -20,8 +20,8 @@ def create_database():
         connection = pymysql.connect(
             host='172.23.104.39',
             port=3306,
-            user='etladmin',
-            password='YOUR_ACTUAL_PASSWORD',  # Replace with actual password
+            user='etadmin',
+            password='etadmin',  # Replace with actual password
             charset='utf8mb4'
         )
         
@@ -43,31 +43,68 @@ def create_database():
             schema_file = os.path.join('database', 'schema.sql')
             
             if os.path.exists(schema_file):
-                with open(schema_file, 'r') as f:
-                    schema = f.read()
+                with open(schema_file, 'r', encoding='utf-8') as f:
+                    schema_content = f.read()
                 
-                # Split by semicolon and execute each statement
-                statements = schema.split(';')
-                for statement in statements:
-                    statement = statement.strip()
-                    if statement and not statement.startswith('--'):
-                        # Skip database creation statements as we already handled them
-                        if statement.startswith('CREATE DATABASE') or statement.startswith('USE'):
-                            continue
+                print(f"   📄 Schema file size: {len(schema_content)} characters")
+                
+                # Better SQL statement parsing - handle multi-line statements
+                statements = []
+                current_statement = ""
+                
+                for line in schema_content.split('\n'):
+                    line = line.strip()
+                    
+                    # Skip empty lines and comments
+                    if not line or line.startswith('--'):
+                        continue
+                        
+                    # Skip database creation statements
+                    if line.startswith('CREATE DATABASE') or line.startswith('USE '):
+                        continue
+                    
+                    current_statement += " " + line
+                    
+                    # If line ends with semicolon, we have a complete statement
+                    if line.endswith(';'):
+                        statements.append(current_statement.strip().rstrip(';'))
+                        current_statement = ""
+                
+                print(f"   📝 Found {len(statements)} SQL statements to execute")
+                
+                # Execute each statement
+                for i, statement in enumerate(statements):
+                    if not statement.strip():
+                        continue
+                        
+                    try:
+                        print(f"   🔄 Executing statement {i+1}/{len(statements)}")
+                        cursor.execute(statement)
+                        
+                        if statement.upper().startswith('CREATE TABLE'):
+                            # Extract table name more carefully
+                            parts = statement.split()
+                            table_idx = -1
+                            for j, part in enumerate(parts):
+                                if part.upper() == 'TABLE':
+                                    table_idx = j + 1
+                                    break
                             
-                        try:
-                            cursor.execute(statement)
-                            if statement.startswith('CREATE TABLE'):
-                                table_name = statement.split('CREATE TABLE')[1].split('(')[0].strip()
-                                if 'IF NOT EXISTS' in table_name:
-                                    table_name = table_name.replace('IF NOT EXISTS', '').strip()
+                            if table_idx < len(parts):
+                                table_name = parts[table_idx].replace('IF', '').replace('NOT', '').replace('EXISTS', '').strip()
                                 print(f"   ✅ Created table: {table_name}")
-                            elif statement.startswith('INSERT INTO'):
-                                table_name = statement.split('INSERT INTO')[1].split('(')[0].strip()
-                                print(f"   ✅ Inserted sample data into: {table_name}")
-                        except Exception as e:
-                            print(f"   ⚠️  Skipped statement: {statement[:50]}... (Error: {e})")
-                            continue
+                        
+                        elif statement.upper().startswith('INSERT INTO'):
+                            table_name = statement.split()[2]
+                            print(f"   ✅ Inserted sample data into: {table_name}")
+                            
+                    except Exception as e:
+                        print(f"   ❌ Failed to execute statement {i+1}: {str(e)}")
+                        print(f"   📜 Statement: {statement[:100]}...")
+                        # Don't continue on CREATE TABLE failures, but continue on INSERT failures
+                        if statement.upper().startswith('CREATE TABLE'):
+                            print(f"   🚨 CREATE TABLE failed - this is critical!")
+                        continue
                 
                 print("\n✅ Database schema setup completed!")
                 
