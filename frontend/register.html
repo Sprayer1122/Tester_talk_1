@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Tester Talk</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container header-flex">
+            <span class="logo" onclick="window.location.href='/'">Tester Talk</span>
+            <button class="btn btn-create" onclick="window.location.href='/'">Back to Issues</button>
+        </div>
+    </header>
+    <main class="container">
+        <div class="auth-container">
+            <div class="auth-card">
+                <h2>Register</h2>
+                <form id="register-form" class="auth-form">
+                    <div class="form-section">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-section">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-section">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <div class="form-section">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input type="password" id="confirm-password" name="confirm-password" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+                    <div id="register-message" class="auth-message"></div>
+                </form>
+                <div class="auth-links">
+                    <p>Already have an account? <a href="/login.html">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="/static/register.js"></script>
+</body>
+</html> 

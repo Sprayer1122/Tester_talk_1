@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue Details | Tester Talk</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container header-flex">
+            <span class="logo" onclick="window.location.href='/'">Tester Talk</span>
+            <nav class="nav-links">
+                <a href="/">Issues</a>
+                <a href="/create.html" id="nav-create-link" style="display: none;">Create Issue</a>
+                <a href="/admin.html" id="admin-panel-link" style="display: none;">Admin Panel</a>
+            </nav>
+            <button type="button" class="btn btn-login" id="login-btn">Login</button>
+        </div>
+    </header>
+    <main class="container">
+        <a href="/" class="back-link">&lt; Back to Issues</a>
+        <section class="issue-detail-card styled-card">
+            <h2 class="section-title">Issue Details</h2>
+            <div class="detail-section">
+                <div class="detail-row">
+                    <label>Test Case Title</label>
+                    <div class="readonly-field" id="issue-title">Test Case Title</div>
+                </div>
+                <div class="detail-row">
+                    <label>Test Case Path</label>
+                    <div class="readonly-field-with-copy">
+                        <div class="readonly-field monospace" id="issue-testcase-path"></div>
+                        <button type="button" class="copy-btn" onclick="copyToClipboard('issue-testcase-path')" title="Copy path to clipboard">
+                            <span class="copy-icon">📋</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="detail-row">
+                    <label>Test Case ID(s)</label>
+                    <div class="readonly-field" id="issue-testcase-ids"></div>
+                </div>
+                <div class="detail-row">
+                    <label>Status</label>
+                    <span id="issue-status" class="tag status-open">OPEN</span>
+                </div>
+                <div class="detail-row">
+                    <label>Severity</label>
+                    <span id="issue-severity" class="tag severity-Medium">Medium</span>
+                </div>
+                <div class="detail-row">
+                    <label>Tags</label>
+                    <div id="issue-tags" class="tags-container">
+                        <!-- Tags will be populated here -->
+                    </div>
+                </div>
+                <div class="detail-row-2col">
+                    <div class="detail-row">
+                        <label>Release</label>
+                        <div class="readonly-field" id="issue-release"></div>
+                    </div>
+                    <div class="detail-row">
+                        <label>Platform</label>
+                        <div class="readonly-field" id="issue-platform"></div>
+                    </div>
+                </div>
+                <div class="detail-row-2col">
+                    <div class="detail-row">
+                        <label>Build</label>
+                        <div class="readonly-field" id="issue-build"></div>
+                    </div>
+                    <div class="detail-row">
+                        <label>Target</label>
+                        <div class="readonly-field" id="issue-target"></div>
+                    </div>
+                </div>
+            </div>
+            <hr class="divider">
+            <div class="content-section">
+                <h3>Content</h3>
+                <div class="content-row">
+                    <label>Description</label>
+                    <div class="readonly-field" id="issue-desc"></div>
+                </div>
+                <div class="content-row" id="additional-comments-section" style="display: none;">
+                    <label>Additional Comments</label>
+                    <div class="readonly-field" id="issue-additional-comments"></div>
+                </div>
+            </div>
+            <hr class="divider">
+            <div class="additional-testcases-section">
+                <h3>Additional Testcase Paths</h3>
+                <p class="section-description">This issue has been found in the following testcases:</p>
+                <div class="testcases-list" id="additional-testcases-list">
+                    <!-- Additional testcase paths will be displayed here -->
+                </div>
+                <div class="add-testcase-form" id="add-testcase-form">
+                    <div class="form-row">
+                        <input type="text" id="new-testcase-path" placeholder="Enter additional testcase path (e.g., /lan/fed/etpv5/release/251/lnx86/etautotest/...)" class="testcase-input">
+                        <button type="button" class="btn btn-primary btn-small" onclick="addTestcasePath()">Add Path</button>
+                    </div>
+                    <div class="form-hint">Add paths where this same issue appears in other testcases</div>
+                </div>
+            </div>
+            <hr class="divider">
+            <div class="attachments-section" id="attachments-section" style="display: none;">
+                <h3>Attachments</h3>
+                <div class="attachments-grid" id="attachments-grid">
+                    <!-- Attachments will be displayed here -->
+                </div>
+            </div>
+            <hr class="divider">
+            <div class="metadata-section">
+                <h3>Issue Metadata</h3>
+                <div class="detail-row-2col">
+                    <div class="detail-row">
+                        <label>Reporter</label>
+                        <div class="readonly-field" id="issue-author">Reporter Name</div>
+                    </div>
+                    <div class="detail-row">
+                        <label>Reviewer</label>
+                        <div class="readonly-field reviewer-field" id="issue-reviewer">
+                            <span class="reviewer-name">Admin</span>
+                            <span class="reviewer-badge">👤</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="detail-row-2col">
+                    <div class="detail-row">
+                        <label>Created At</label>
+                        <div class="readonly-field" id="issue-created">Creation Time</div>
+                    </div>
+                    <div class="detail-row">
+                        <label>Updated At</label>
+                        <div class="readonly-field" id="issue-updated">Update Time</div>
+                    </div>
+                </div>
+                <div class="detail-row">
+                    <label>Testcases Found</label>
+                    <div class="readonly-field">
+                        <span class="testcase-count-badge">
+                            <span id="testcase-count">1</span> testcase(s)
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="comments-section styled-card" aria-label="Comments">
+            <div class="comments-header">
+                <h3 class="comments-title">
+                    Discussion
+                    <span class="comment-count" id="comments-badge">0</span>
+                </h3>
+                <div class="comments-sort">
+                    <select id="comments-sort-select">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                    </select>
+                </div>
+            </div>
+            
+            <form id="add-comment-form" class="comment-form" autocomplete="off" novalidate>
+                <div class="comment-input-section">
+                    <div class="comment-input-row">
+                        <div class="comment-author-display" id="comment-author-display">
+                            <span class="comment-author-label">Posting as:</span>
+                            <span class="comment-author-name" id="comment-author-name">Loading...</span>
+                        </div>
+                        <button type="submit" id="comment-submit-btn" class="comment-submit-btn">Post</button>
+                    </div>
+                    <textarea id="comment-content" name="content" placeholder="Share your thoughts, solutions, or ask questions..." maxlength="1000" required aria-label="Comment" class="comment-textarea"></textarea>
+                </div>
+                <div id="comment-form-message" class="comment-message" role="alert" aria-live="polite"></div>
+            </form>
+            
+            <div id="comments-list" class="comments-list"></div>
+        </section>
+    </main>
+    <script src="/static/main.js"></script>
+    <script src="/static/notifications.js"></script>
+    <script src="/static/loading.js"></script>
+    <script src="/static/detail.js"></script>
+</body>
+</html> 

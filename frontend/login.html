@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Tester Talk</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container header-flex">
+            <span class="logo" onclick="window.location.href='/'">Tester Talk</span>
+            <button class="btn btn-create" onclick="window.location.href='/'">Back to Issues</button>
+        </div>
+    </header>
+    <main class="container">
+        <div class="auth-container">
+            <div class="auth-card">
+                <h2>Login</h2>
+                <form id="login-form" class="auth-form">
+                    <div class="form-section">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-section">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Login</button>
+                    </div>
+                    <div id="login-message" class="auth-message"></div>
+                </form>
+                <div class="auth-links">
+                    <p>Don't have an account? <a href="/register.html">Register here</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="/static/login.js"></script>
+</body>
+</html> 

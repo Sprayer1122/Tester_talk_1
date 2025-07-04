@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading System Test - Tester Talk</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="main-header">
+            <h1>Loading System Test</h1>
+            <p>Test the professional loading screens</p>
+        </div>
+
+        <div class="styled-card">
+            <h2>Loading System Test Controls</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin: 20px 0;">
+                <button class="btn" onclick="testOverlayLoading()">Test Overlay Loading</button>
+                <button class="btn" onclick="testSkeletonLoading()">Test Skeleton Loading</button>
+                <button class="btn" onclick="testContentLoading()">Test Content Loading</button>
+                <button class="btn" onclick="testTableLoading()">Test Table Loading</button>
+                <button class="btn" onclick="testFormLoading()">Test Form Loading</button>
+                <button class="btn" onclick="testButtonLoading()">Test Button Loading</button>
+                <button class="btn" onclick="testSearchLoading()">Test Search Loading</button>
+                <button class="btn" onclick="testPageLoading()">Test Page Loading</button>
+            </div>
+
+            <div id="test-content" style="margin-top: 30px;">
+                <h3>Test Content Area</h3>
+                <p>This area will be used to test various loading states.</p>
+            </div>
+
+            <div id="test-table" style="margin-top: 30px;">
+                <h3>Test Table Area</h3>
+                <div style="background: #f9fafb; padding: 20px; border-radius: 8px;">
+                    <p>Table loading will be tested here.</p>
+                </div>
+            </div>
+
+            <form id="test-form" style="margin-top: 30px;">
+                <h3>Test Form</h3>
+                <div class="form-section">
+                    <label for="test-input">Test Input</label>
+                    <input type="text" id="test-input" placeholder="Enter some text">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" id="test-submit-btn" class="btn">Submit Form</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="static/loading.js"></script>
+    <script>
+        // Test functions
+        function testOverlayLoading() {
+            console.log('🧪 Testing overlay loading...');
+            loading.showOverlay('Testing Overlay', 'This is a test of the professional loading overlay...');
+            setTimeout(() => {
+                loading.hideOverlay();
+                console.log('✅ Overlay test completed');
+            }, 3000);
+        }
+
+        function testSkeletonLoading() {
+            console.log('🧪 Testing skeleton loading...');
+            loading.showSkeleton('test-content', 3);
+            setTimeout(() => {
+                loading.hideLoading('test-content');
+                document.getElementById('test-content').innerHTML = `
+                    <h3>Test Content Area</h3>
+                    <p>Skeleton loading test completed successfully!</p>
+                    <p>This content was loaded after the skeleton animation.</p>
+                `;
+                console.log('✅ Skeleton test completed');
+            }, 3000);
+        }
+
+        function testContentLoading() {
+            console.log('🧪 Testing content loading...');
+            loading.showContentLoading('test-content', 'Loading test content...');
+            setTimeout(() => {
+                loading.hideLoading('test-content');
+                document.getElementById('test-content').innerHTML = `
+                    <h3>Test Content Area</h3>
+                    <p>Content loading test completed successfully!</p>
+                    <p>This content was loaded after the content loading animation.</p>
+                `;
+                console.log('✅ Content loading test completed');
+            }, 3000);
+        }
+
+        function testTableLoading() {
+            console.log('🧪 Testing table loading...');
+            loading.showTableLoading('test-table', 4);
+            setTimeout(() => {
+                loading.hideLoading('test-table');
+                document.getElementById('test-table').innerHTML = `
+                    <h3>Test Table Area</h3>
+                    <div style="background: #f9fafb; padding: 20px; border-radius: 8px;">
+                        <p>Table loading test completed successfully!</p>
+                        <p>This table was loaded after the table loading animation.</p>
+                    </div>
+                `;
+                console.log('✅ Table loading test completed');
+            }, 3000);
+        }
+
+        function testFormLoading() {
+            console.log('🧪 Testing form loading...');
+            loading.showFormLoading('test-form', 'Processing form...');
+            setTimeout(() => {
+                loading.hideFormLoading('test-form');
+                console.log('✅ Form loading test completed');
+            }, 3000);
+        }
+
+        function testButtonLoading() {
+            console.log('🧪 Testing button loading...');
+            loading.showButtonLoading('test-submit-btn', 'Processing...');
+            setTimeout(() => {
+                loading.hideButtonLoading('test-submit-btn');
+                console.log('✅ Button loading test completed');
+            }, 3000);
+        }
+
+        function testSearchLoading() {
+            console.log('🧪 Testing search loading...');
+            loading.showSearchLoading('test-content', 'Searching...');
+            setTimeout(() => {
+                loading.hideLoading('test-content');
+                document.getElementById('test-content').innerHTML = `
+                    <h3>Test Content Area</h3>
+                    <p>Search loading test completed successfully!</p>
+                    <p>Search results would appear here.</p>
+                `;
+                console.log('✅ Search loading test completed');
+            }, 3000);
+        }
+
+        function testPageLoading() {
+            console.log('🧪 Testing page loading...');
+            loading.showPageLoading();
+            setTimeout(() => {
+                loading.hidePageLoading();
+                console.log('✅ Page loading test completed');
+            }, 3000);
+        }
+
+        // Form submission test
+        document.getElementById('test-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            testFormLoading();
+        });
+
+        // Initialize test page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🧪 Loading test page initialized');
+            console.log('📊 Loading system available:', !!window.loading);
+        });
+    </script>
+</body>
+</html> 

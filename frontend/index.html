@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tester Talk</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container header-flex">
+            <span class="logo" onclick="window.location.href='/'">Tester Talk</span>
+            <nav class="nav-links">
+                <a href="/" class="active">Issues</a>
+                <a href="/create.html" id="nav-create-link" style="display: none;">Create Issue</a>
+                <a href="/admin.html" id="admin-panel-link" style="display: none;">Admin Panel</a>
+            </nav>
+            <button type="button" class="btn btn-login" id="login-btn">Login</button>
+        </div>
+    </header>
+    <main class="container">
+        <section class="page-title-row">
+            <div class="page-title">
+                <h1>Testcase Reviews</h1>
+                <p>Browse and manage test case issues</p>
+            </div>
+            <button type="button" class="btn btn-create" id="create-issue-btn" style="display: none;">+ Create Issue</button>
+        </section>
+        <section class="search-filter-card">
+            <form id="search-form">
+                <div class="search-row">
+                    <input type="text" id="search-input" placeholder="Search issues by title, description, test case ID...">
+                    <button type="submit" class="btn btn-search">Search</button>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label>Status</label>
+                        <select id="filter-status"></select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Severity</label>
+                        <select id="filter-severity"></select>
+                    </div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-group">
+                        <label>Build</label>
+                        <select id="filter-build"></select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Platform</label>
+                        <select id="filter-platform"></select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Release</label>
+                        <select id="filter-release"></select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Target</label>
+                        <select id="filter-target"></select>
+                    </div>
+                </div>
+                <div class="quick-filters">
+                    <span>Quick Filters:</span>
+                    <button type="button" class="quick-filter active" data-filter="all">All</button>
+                    <button type="button" class="quick-filter" data-filter="open">Open</button>
+                    <button type="button" class="quick-filter" data-filter="resolved">Resolved</button>
+                    <button type="button" class="quick-filter" data-filter="ccr">CCR</button>
+                </div>
+            </form>
+        </section>
+        <section id="issues-list" class="issues-list"></section>
+        <div id="issue-detail-view" style="display:none;"></div>
+    </main>
+    <script src="/static/notifications.js"></script>
+    <script src="/static/loading.js"></script>
+    <script src="/static/main.js"></script>
+</body>
+</html> 
